@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly PR Reports - Analytics Experience</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      line-height: 1.6;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .week-report {
+      margin: 20px 0;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      background: #fafbfc;
+    }
+    .week-report summary {
+      padding: 15px 20px;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #2c3e50;
+      background: #f6f8fa;
+      border-radius: 6px;
+      user-select: none;
+    }
+    .week-report summary:hover {
+      background: #e8f4f8;
+    }
+    .week-report[open] summary {
+      border-bottom: 1px solid #e1e4e8;
+      border-radius: 6px 6px 0 0;
+    }
+    .report-content {
+      padding: 20px;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ecf0f1;
+      padding-bottom: 5px;
+    }
+    .pr-list {
+      list-style: none;
+      padding: 0;
+    }
+    .pr-item {
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #ffffff;
+      border-left: 4px solid #3498db;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    .pr-item:hover {
+      background: #e8f4f8;
+    }
+    .pr-link {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .pr-link:hover {
+      text-decoration: underline;
+    }
+    .pr-meta {
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+    .summary {
+      background: #ecf0f1;
+      padding: 20px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+    .summary h2 {
+      margin-top: 0;
+      border: none;
+    }
+    .stat {
+      display: inline-block;
+      background: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .repo-stat {
+      margin: 8px 0;
+      padding: 8px;
+      background: white;
+      border-radius: 4px;
+    }
+    .updated {
+      text-align: right;
+      color: #95a5a6;
+      font-size: 0.9em;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #ecf0f1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Analytics Experience Weekly PR Reports</h1>
+    <div id="reports">
+
+    <details open class="week-report">
+      <summary>Dec 1 - Dec 7, 2025</summary>
+      <div class="report-content">
+        <h2>Pull Requests Merged</h2>
+        <ul class="pr-list">
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/301482" class="pr-link" target="_blank">Add formatShopifyQLMetricCard</a>
+            <div class="pr-meta">@bencmilton • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/298780" class="pr-link" target="_blank">Add Reportify request/fixture functionality to Storybook</a>
+            <div class="pr-meta">@bencmilton • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/298659" class="pr-link" target="_blank">Remove LOCAL_PACKAGES environment variable in favor of LOCAL_ANALYTICS_UI_COMPONENTS</a>
+            <div class="pr-meta">@bencmilton • Dec 3 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/297838" class="pr-link" target="_blank">Bugfix: unstable types regression</a>
+            <div class="pr-meta">@bencmilton • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/297030" class="pr-link" target="_blank">Update exports to access generated types</a>
+            <div class="pr-meta">@bencmilton • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/296806" class="pr-link" target="_blank">Move Reportify utils from internal to unstable exports</a>
+            <div class="pr-meta">@bencmilton • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/295599" class="pr-link" target="_blank">Add ShopifyQLMetricCard component</a>
+            <div class="pr-meta">@bencmilton • Dec 3 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/290755" class="pr-link" target="_blank">Add MetricCardLoading component</a>
+            <div class="pr-meta">@bencmilton • Dec 1 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/290754" class="pr-link" target="_blank">Add MetricCardError component</a>
+            <div class="pr-meta">@bencmilton • Dec 1 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/290676" class="pr-link" target="_blank">Add MetricCardEmpty component</a>
+            <div class="pr-meta">@bencmilton • Dec 1 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/294149" class="pr-link" target="_blank">[Analytics] Make mobile buttons the same height</a>
+            <div class="pr-meta">@carysmills • Dec 3 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/291734" class="pr-link" target="_blank">List improvements</a>
+            <div class="pr-meta">@envex • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/295112" class="pr-link" target="_blank">Fix skipped tests in MetricReport.test.tsx</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 3 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/294772" class="pr-link" target="_blank">Bump analytics-ui-components</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 3 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/232548" class="pr-link" target="_blank">Add typeguards to MobileDatePicker</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 1 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/275182" class="pr-link" target="_blank">Bump `analytics-ui-components@v27` and `shopifyql-parser@v25`</a>
+            <div class="pr-meta">@mkevinq • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/274921" class="pr-link" target="_blank">Update `shopifyql-parser` to v23</a>
+            <div class="pr-meta">@mkevinq • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/296344" class="pr-link" target="_blank">Add top 5 by store name to conversion rate and total sales</a>
+            <div class="pr-meta">@mollerjorge • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/291566" class="pr-link" target="_blank">Cleanup javascript logic for analytics issues</a>
+            <div class="pr-meta">@mollerjorge • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/251369" class="pr-link" target="_blank">Add translations buttons</a>
+            <div class="pr-meta">@mollerjorge • Dec 2 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/244524" class="pr-link" target="_blank">Ignore incident_url column</a>
+            <div class="pr-meta">@mollerjorge • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/298560" class="pr-link" target="_blank">fix, When first metric or visualized metric is formula, return `Valid query` message</a>
+            <div class="pr-meta">@Passanelli • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/301404" class="pr-link" target="_blank">Require modifier key to open nerd menu on Live View</a>
+            <div class="pr-meta">@philschoefer • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/299833" class="pr-link" target="_blank">[Analytics][Exploration Mode] Truncate metrics</a>
+            <div class="pr-meta">@rita-morozova • Dec 4 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/295218" class="pr-link" target="_blank">Fix last 4 years bfcm test</a>
+            <div class="pr-meta">@susiekims • Dec 1 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/303822" class="pr-link" target="_blank">[Analytics UI Components] Add paired file update check to CI</a>
+            <div class="pr-meta">@thetrevorharmon • Dec 5 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/301" class="pr-link" target="_blank">enable 2D partial behaviour and add "other" bucket indicators</a>
+            <div class="pr-meta">@503stevenson • Dec 4 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/310" class="pr-link" target="_blank">Add CompactHorizontalBar</a>
+            <div class="pr-meta">@envex • Dec 5 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/307" class="pr-link" target="_blank">Optimize CSS bundle</a>
+            <div class="pr-meta">@envex • Dec 4 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/304" class="pr-link" target="_blank">Filter out unsupported characters</a>
+            <div class="pr-meta">@envex • Dec 4 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/303" class="pr-link" target="_blank">Add filediff action</a>
+            <div class="pr-meta">@envex • Dec 4 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/302" class="pr-link" target="_blank">Add SparkDistributionChart</a>
+            <div class="pr-meta">@envex • Dec 4 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/merchant-analytics-api/pull/5241" class="pr-link" target="_blank">bump shopifyql-parser to v25</a>
+            <div class="pr-meta">@prachyo • Dec 5 • Shopify/merchant-analytics-api</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2754" class="pr-link" target="_blank">feature, Add `IS TRUE` and `IS FALSE` in `isFilterExpression` check</a>
+            <div class="pr-meta">@Passanelli • Dec 4 • Shopify/shopifyql</div>
+          </li>
+        </ul>
+        
+        <div class="summary">
+          <h2>Summary</h2>
+          <div class="stat">Total PRs merged: 34</div>
+          
+          <h3 style="margin-top: 20px; margin-bottom: 10px;">By Repository:</h3>
+          <div class="repo-stat">shop/world: 26 PRs</div>
+          <div class="repo-stat">Shopify/polaris-viz-internal: 6 PRs</div>
+          <div class="repo-stat">Shopify/merchant-analytics-api: 1 PR</div>
+          <div class="repo-stat">Shopify/shopifyql: 1 PR</div>
+        </div>
+      </div>
+    </details>
+    </div>
+    
+    <div class="updated">Last updated: 12/8/2025, 1:16:45 PM</div>
+  </div>
+</body>
+</html>
