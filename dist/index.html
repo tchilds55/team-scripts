@@ -118,14 +118,352 @@
       padding-top: 20px;
       border-top: 1px solid #ecf0f1;
     }
+    .search-container {
+      margin: 20px 0 30px 0;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      font-size: 16px;
+      border: 2px solid #e1e4e8;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .search-input:focus {
+      border-color: #3498db;
+    }
+    .search-input::placeholder {
+      color: #95a5a6;
+    }
+    .search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      pointer-events: none;
+    }
+    .clear-search {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #95a5a6;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 8px;
+      display: none;
+    }
+    .clear-search:hover {
+      color: #2c3e50;
+    }
+    .pr-item.hidden {
+      display: none;
+    }
+    .week-report.no-results {
+      opacity: 0.5;
+    }
+    .no-results-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: #7f8c8d;
+      font-size: 1.1em;
+      display: none;
+    }
+    .no-results-message.visible {
+      display: block;
+    }
+    .search-stats {
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-top: 8px;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>📊 Analytics Experience Weekly PR Reports</h1>
+    
+    <div class="search-container">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search PRs by title, author, or repo..."
+      />
+      <button class="clear-search" id="clearSearch" title="Clear search">&times;</button>
+      <span class="search-icon">🔍</span>
+      <div class="search-stats" id="searchStats"></div>
+    </div>
+    
+    <div class="no-results-message" id="noResults">
+      No PRs found matching your search criteria.
+    </div>
+    
     <div id="reports">
 
     <details open class="week-report">
+      <summary>Dec 8 - Dec 14, 2025</summary>
+      <div class="report-content">
+        <h2>Pull Requests Merged</h2>
+        <ul class="pr-list">
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/315533" class="pr-link" target="_blank">Bump dependencies in analytics-ui</a>
+            <div class="pr-meta">@bencmilton • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/314560" class="pr-link" target="_blank">Reset analytics-ui version</a>
+            <div class="pr-meta">@bencmilton • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/314226" class="pr-link" target="_blank">Remove fetch query from ShopifyQLPlugin type</a>
+            <div class="pr-meta">@bencmilton • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/313309" class="pr-link" target="_blank">Add changeset check for analytics-ui</a>
+            <div class="pr-meta">@bencmilton • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/312583" class="pr-link" target="_blank">Add conveyor.yml</a>
+            <div class="pr-meta">@bencmilton • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/312358" class="pr-link" target="_blank">Add f_extensible_analytics_web_components beta flag</a>
+            <div class="pr-meta">@bencmilton • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/312248" class="pr-link" target="_blank">Fix for formatShopifyQLMetricCard</a>
+            <div class="pr-meta">@bencmilton • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/310114" class="pr-link" target="_blank">Bump analytics-ui-components in analytics-ui package</a>
+            <div class="pr-meta">@bencmilton • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/309616" class="pr-link" target="_blank">Add support for benchmarksNext</a>
+            <div class="pr-meta">@bencmilton • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/307256" class="pr-link" target="_blank">Strip comments from graphql files in the /build</a>
+            <div class="pr-meta">@bencmilton • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/305432" class="pr-link" target="_blank">Add signals to formatListWithDimensionValues</a>
+            <div class="pr-meta">@bencmilton • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/305038" class="pr-link" target="_blank">Migrate Annotations to Polaris Viz</a>
+            <div class="pr-meta">@bencmilton • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/304844" class="pr-link" target="_blank">Migrate CompactHorizontalChart to Polaris Viz</a>
+            <div class="pr-meta">@bencmilton • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/303927" class="pr-link" target="_blank">Add getObservableCoreQuery utility</a>
+            <div class="pr-meta">@bencmilton • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/157824" class="pr-link" target="_blank">Integrate ShopifyQLMetricCard web component from new analytics-ui package</a>
+            <div class="pr-meta">@bencmilton • Dec 13 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/312878" class="pr-link" target="_blank">Revert "[Analytics] Remove unneccessary override on scrollable (#303176)"</a>
+            <div class="pr-meta">@carysmills • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/303176" class="pr-link" target="_blank">[Analytics] Remove unneccessary override on scrollable</a>
+            <div class="pr-meta">@carysmills • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/314130" class="pr-link" target="_blank">Re-add container overflow and condense numbers</a>
+            <div class="pr-meta">@envex • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/313090" class="pr-link" target="_blank">Filter out NULL values from CompactHorizontalBar</a>
+            <div class="pr-meta">@envex • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/312275" class="pr-link" target="_blank">Pass overrideChartType to getChartFormatters</a>
+            <div class="pr-meta">@envex • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/310504" class="pr-link" target="_blank">VisualizationOptionsNext</a>
+            <div class="pr-meta">@envex • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/315061" class="pr-link" target="_blank">Change retention translation to cohort</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/305287" class="pr-link" target="_blank">Fix dropdown widths</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/284059" class="pr-link" target="_blank">Filter `options` in ReportQuery</a>
+            <div class="pr-meta">@JeremyLudwigDev • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/309510" class="pr-link" target="_blank">Changeset for lil table PR</a>
+            <div class="pr-meta">@maryamkaka • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/292268" class="pr-link" target="_blank">[ReportifyMetricCard] Hello lil table </a>
+            <div class="pr-meta">@maryamkaka • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/310516" class="pr-link" target="_blank">Bump analytics-ui-components to v28.0.0</a>
+            <div class="pr-meta">@michaelnesen • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/307129" class="pr-link" target="_blank">Fix reports index filtering e2e test</a>
+            <div class="pr-meta">@michaelnesen • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/304080" class="pr-link" target="_blank">Migrate ReportifyMetricCard primaryAction prop to ReactNode usage</a>
+            <div class="pr-meta">@michaelnesen • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/296525" class="pr-link" target="_blank">Remove primary action button types to accept ReactNode only</a>
+            <div class="pr-meta">@michaelnesen • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/296114" class="pr-link" target="_blank">Add 'includes' dropdown filter to reports index</a>
+            <div class="pr-meta">@michaelnesen • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/216436" class="pr-link" target="_blank">Add analytics outage system to Reportify metric card</a>
+            <div class="pr-meta">@michaelnesen • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/301382" class="pr-link" target="_blank">Add back maintenance task to remove old top N syntax</a>
+            <div class="pr-meta">@mkevinq • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/307084" class="pr-link" target="_blank">Remove top n from total sales over time by store card</a>
+            <div class="pr-meta">@mollerjorge • Dec 9 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/304773" class="pr-link" target="_blank">Add copy changes to translation messages</a>
+            <div class="pr-meta">@mollerjorge • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/304176" class="pr-link" target="_blank">[Metafields] Add f_analytics_metafields beta flag</a>
+            <div class="pr-meta">@pbojinov • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/305530" class="pr-link" target="_blank">[Analytics][Exploration Mode] Preserve invalid query state on mode switch</a>
+            <div class="pr-meta">@rita-morozova • Dec 11 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/301356" class="pr-link" target="_blank">[Analytics][Exploration Mode] Fix disappearing filter</a>
+            <div class="pr-meta">@rita-morozova • Dec 8 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/276106" class="pr-link" target="_blank">[Analytics][Exploration mode] Add analytics_ua_report_mode_change/1.0 event</a>
+            <div class="pr-meta">@rita-morozova • Dec 12 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/274302" class="pr-link" target="_blank">[AUIC] Cohort enhancements</a>
+            <div class="pr-meta">@susiekims • Dec 13 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/264871" class="pr-link" target="_blank">Migrate Marketing section to use vendored copy of AnalyticsDateRange</a>
+            <div class="pr-meta">@thetrevorharmon • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/247004" class="pr-link" target="_blank">Fork AnalyticsDateRange into web-only copy</a>
+            <div class="pr-meta">@thetrevorharmon • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/shop/world/pull/246982" class="pr-link" target="_blank">Move AnalyticsDateControlsUA to Marketing/components</a>
+            <div class="pr-meta">@thetrevorharmon • Dec 10 • shop/world</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/320" class="pr-link" target="_blank">Don't render line when data only has a single point</a>
+            <div class="pr-meta">@envex • Dec 9 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/319" class="pr-link" target="_blank">CompactHorizontalBar min height</a>
+            <div class="pr-meta">@envex • Dec 9 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/317" class="pr-link" target="_blank">Remove min-height for CompactHorizontalChart</a>
+            <div class="pr-meta">@envex • Dec 8 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/313" class="pr-link" target="_blank">Fix CompactHorizontalBar export</a>
+            <div class="pr-meta">@envex • Dec 8 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/309" class="pr-link" target="_blank">Remove custom annotation content rendering</a>
+            <div class="pr-meta">@envex • Dec 8 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/polaris-viz-internal/pull/327" class="pr-link" target="_blank">Migrate Chromatic check from GitHub Actions to Shopify CI</a>
+            <div class="pr-meta">@thetrevorharmon • Dec 9 • Shopify/polaris-viz-internal</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/merchant-analytics-api/pull/5316" class="pr-link" target="_blank">Fix operator notation for `cdp_store_credit_accounts`</a>
+            <div class="pr-meta">@mkevinq • Dec 12 • Shopify/merchant-analytics-api</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/merchant-analytics-api/pull/5204" class="pr-link" target="_blank">shopifyql-parser bump (v25 -> v26)</a>
+            <div class="pr-meta">@prachyo • Dec 10 • Shopify/merchant-analytics-api</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2793" class="pr-link" target="_blank">Release shopifyql-parser 26.0.0</a>
+            <div class="pr-meta">@mkevinq • Dec 9 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2764" class="pr-link" target="_blank">Pass feature flags to expression visiting functions</a>
+            <div class="pr-meta">@mkevinq • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2716" class="pr-link" target="_blank">Validate required and mutually exclusive parameters in `MATCHES`</a>
+            <div class="pr-meta">@mkevinq • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2765" class="pr-link" target="_blank">feature, Add support for `STARTS WITH` and `ENDS WITH` in `isFilterExpression` check</a>
+            <div class="pr-meta">@Passanelli • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2770" class="pr-link" target="_blank">matches restrict field operators</a>
+            <div class="pr-meta">@prachyo • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2704" class="pr-link" target="_blank">Add GeoCoordinate semantic type</a>
+            <div class="pr-meta">@prachyo • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2672" class="pr-link" target="_blank">validation for MATCHES</a>
+            <div class="pr-meta">@prachyo • Dec 8 • Shopify/shopifyql</div>
+          </li>
+          <li class="pr-item">
+            <a href="https://github.com/Shopify/shopifyql/pull/2660" class="pr-link" target="_blank">Add MATCHES syntax</a>
+            <div class="pr-meta">@prachyo • Dec 8 • Shopify/shopifyql</div>
+          </li>
+        </ul>
+        
+        <div class="summary">
+          <h2>Summary</h2>
+          <div class="stat">Total PRs merged: 59</div>
+          
+          <h3 style="margin-top: 20px; margin-bottom: 10px;">By Repository:</h3>
+          <div class="repo-stat">shop/world: 43 PRs</div>
+          <div class="repo-stat">Shopify/shopifyql: 8 PRs</div>
+          <div class="repo-stat">Shopify/polaris-viz-internal: 6 PRs</div>
+          <div class="repo-stat">Shopify/merchant-analytics-api: 2 PRs</div>
+        </div>
+      </div>
+    </details>
+<details class="week-report">
       <summary>Dec 1 - Dec 7, 2025</summary>
       <div class="report-content">
         <h2>Pull Requests Merged</h2>
@@ -282,7 +620,93 @@
     </details>
     </div>
     
-    <div class="updated">Last updated: 12/8/2025, 1:16:45 PM</div>
+    <div class="updated">Last updated: 12/19/2025, 3:20:19 PM</div>
   </div>
+  
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const searchStats = document.getElementById('searchStats');
+    const noResults = document.getElementById('noResults');
+    const weekReports = document.querySelectorAll('.week-report');
+    
+    function performSearch() {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      
+      // Show/hide clear button
+      clearSearch.style.display = searchTerm ? 'block' : 'none';
+      
+      if (!searchTerm) {
+        // Reset everything if search is empty
+        document.querySelectorAll('.pr-item').forEach(item => {
+          item.classList.remove('hidden');
+        });
+        weekReports.forEach(report => {
+          report.classList.remove('no-results');
+        });
+        noResults.classList.remove('visible');
+        searchStats.textContent = '';
+        return;
+      }
+      
+      let totalVisible = 0;
+      let totalPRs = 0;
+      
+      // Search through all week reports
+      weekReports.forEach(report => {
+        const prItems = report.querySelectorAll('.pr-item');
+        let visibleInWeek = 0;
+        
+        prItems.forEach(item => {
+          totalPRs++;
+          const title = item.querySelector('.pr-link')?.textContent.toLowerCase() || '';
+          const meta = item.querySelector('.pr-meta')?.textContent.toLowerCase() || '';
+          
+          // Check if search term matches title, author, or repo
+          if (title.includes(searchTerm) || meta.includes(searchTerm)) {
+            item.classList.remove('hidden');
+            visibleInWeek++;
+            totalVisible++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Dim week reports with no matching results
+        if (visibleInWeek === 0) {
+          report.classList.add('no-results');
+        } else {
+          report.classList.remove('no-results');
+        }
+      });
+      
+      // Show no results message if nothing found
+      if (totalVisible === 0) {
+        noResults.classList.add('visible');
+        searchStats.textContent = '';
+      } else {
+        noResults.classList.remove('visible');
+        searchStats.textContent = `Showing ${totalVisible} of ${totalPRs} PRs`;
+      }
+    }
+    
+    // Event listeners
+    searchInput.addEventListener('input', performSearch);
+    
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      performSearch();
+      searchInput.focus();
+    });
+    
+    // Allow Escape key to clear search
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        performSearch();
+      }
+    });
+  </script>
 </body>
 </html>
