@@ -420,11 +420,94 @@ function formatReportAsHTML(dateRange, allPRs) {
       padding-top: 20px;
       border-top: 1px solid #ecf0f1;
     }
+    .search-container {
+      margin: 20px 0 30px 0;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      font-size: 16px;
+      border: 2px solid #e1e4e8;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .search-input:focus {
+      border-color: #3498db;
+    }
+    .search-input::placeholder {
+      color: #95a5a6;
+    }
+    .search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #95a5a6;
+      pointer-events: none;
+    }
+    .clear-search {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #95a5a6;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 8px;
+      display: none;
+    }
+    .clear-search:hover {
+      color: #2c3e50;
+    }
+    .pr-item.hidden {
+      display: none;
+    }
+    .week-report.no-results {
+      opacity: 0.5;
+    }
+    .no-results-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: #7f8c8d;
+      font-size: 1.1em;
+      display: none;
+    }
+    .no-results-message.visible {
+      display: block;
+    }
+    .search-stats {
+      color: #7f8c8d;
+      font-size: 0.9em;
+      margin-top: 8px;
+      text-align: right;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>📊 Analytics Experience Weekly PR Reports</h1>
+    
+    <div class="search-container">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search PRs by title, author, or repo..."
+      />
+      <button class="clear-search" id="clearSearch" title="Clear search">&times;</button>
+      <span class="search-icon">🔍</span>
+      <div class="search-stats" id="searchStats"></div>
+    </div>
+    
+    <div class="no-results-message" id="noResults">
+      No PRs found matching your search criteria.
+    </div>
+    
     <div id="reports">
       <!-- Weekly reports will be inserted here -->
     </div>
@@ -433,6 +516,92 @@ function formatReportAsHTML(dateRange, allPRs) {
       timeZone: "America/New_York",
     })}</div>
   </div>
+  
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const searchStats = document.getElementById('searchStats');
+    const noResults = document.getElementById('noResults');
+    const weekReports = document.querySelectorAll('.week-report');
+    
+    function performSearch() {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      
+      // Show/hide clear button
+      clearSearch.style.display = searchTerm ? 'block' : 'none';
+      
+      if (!searchTerm) {
+        // Reset everything if search is empty
+        document.querySelectorAll('.pr-item').forEach(item => {
+          item.classList.remove('hidden');
+        });
+        weekReports.forEach(report => {
+          report.classList.remove('no-results');
+        });
+        noResults.classList.remove('visible');
+        searchStats.textContent = '';
+        return;
+      }
+      
+      let totalVisible = 0;
+      let totalPRs = 0;
+      
+      // Search through all week reports
+      weekReports.forEach(report => {
+        const prItems = report.querySelectorAll('.pr-item');
+        let visibleInWeek = 0;
+        
+        prItems.forEach(item => {
+          totalPRs++;
+          const title = item.querySelector('.pr-link')?.textContent.toLowerCase() || '';
+          const meta = item.querySelector('.pr-meta')?.textContent.toLowerCase() || '';
+          
+          // Check if search term matches title, author, or repo
+          if (title.includes(searchTerm) || meta.includes(searchTerm)) {
+            item.classList.remove('hidden');
+            visibleInWeek++;
+            totalVisible++;
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+        
+        // Dim week reports with no matching results
+        if (visibleInWeek === 0) {
+          report.classList.add('no-results');
+        } else {
+          report.classList.remove('no-results');
+        }
+      });
+      
+      // Show no results message if nothing found
+      if (totalVisible === 0) {
+        noResults.classList.add('visible');
+        searchStats.textContent = '';
+      } else {
+        noResults.classList.remove('visible');
+        searchStats.textContent = \`Showing \${totalVisible} of \${totalPRs} PRs\`;
+      }
+    }
+    
+    // Event listeners
+    searchInput.addEventListener('input', performSearch);
+    
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      performSearch();
+      searchInput.focus();
+    });
+    
+    // Allow Escape key to clear search
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        performSearch();
+      }
+    });
+  </script>
 </body>
 </html>`;
 
