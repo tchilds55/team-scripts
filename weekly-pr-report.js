@@ -18,10 +18,10 @@ const CONFIG = {
   ], // Add more repos as needed
   owners: [
     "503stevenson",
-    "alexstarostashopify",
     "bencmilton",
     "carysmills",
     "envex",
+    "hannahl123",
     "JeremyLudwigDev",
     "kvendrik",
     "maryamkaka",
@@ -31,7 +31,6 @@ const CONFIG = {
     "Passanelli",
     "pbojinov",
     "philschoefer",
-    "prachyo",
     "rita-morozova",
     "susiekims",
     "thetrevorharmon",
@@ -197,35 +196,40 @@ function formatReport(dateRange, allPRs) {
   let report = `:mega: *Weekly PR Report*\n`;
   report += `*Week of ${dateRange.startFormatted} - ${dateRange.endFormatted}*\n\n`;
 
-  // Add all PRs
-  report += `*Pull Requests:*\n`;
-  for (const pr of allPRs) {
-    const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    });
-    report += `• <${pr.url}> ${pr.title} (@${pr.author.login}, ${date})\n`;
-  }
-
-  // Add summary section at the end
-  report += `\n*Total PRs merged: ${allPRs.length}*\n\n`;
-
-  // Add summary by repository
-  const repoCount = {};
-  for (const pr of allPRs) {
-    // Extract repo name from URL (e.g., "shop/world" from "https://github.com/shop/world/pull/123")
-    const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-    if (repoMatch) {
-      const repo = repoMatch[1];
-      repoCount[repo] = (repoCount[repo] || 0) + 1;
+  if (allPRs.length === 0) {
+    report += `No PRs were merged this week.\n\n`;
+    report += `*Total PRs merged: 0*\n`;
+  } else {
+    // Add all PRs
+    report += `*Pull Requests:*\n`;
+    for (const pr of allPRs) {
+      const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      report += `• <${pr.url}> ${pr.title} (@${pr.author.login}, ${date})\n`;
     }
-  }
 
-  report += `*Summary by Repository:*\n`;
-  for (const [repo, count] of Object.entries(repoCount).sort(
-    (a, b) => b[1] - a[1]
-  )) {
-    report += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
+    // Add summary section at the end
+    report += `\n*Total PRs merged: ${allPRs.length}*\n\n`;
+
+    // Add summary by repository
+    const repoCount = {};
+    for (const pr of allPRs) {
+      // Extract repo name from URL (e.g., "shop/world" from "https://github.com/shop/world/pull/123")
+      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
+      if (repoMatch) {
+        const repo = repoMatch[1];
+        repoCount[repo] = (repoCount[repo] || 0) + 1;
+      }
+    }
+
+    report += `*Summary by Repository:*\n`;
+    for (const [repo, count] of Object.entries(repoCount).sort(
+      (a, b) => b[1] - a[1]
+    )) {
+      report += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
+    }
   }
 
   return report;
@@ -252,40 +256,55 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
     <details${isOpen ? " open" : ""} class="week-report">
       <summary>${dateRange.startFormatted} - ${dateRange.endFormatted}</summary>
       <div class="report-content">
-        <h2>Pull Requests Merged</h2>
+        <h2>Pull Requests Merged</h2>`;
+
+  if (allPRs.length === 0) {
+    html += `
+        <div style="text-align: center; padding: 40px 20px; color: #7f8c8d;">
+          <p style="font-size: 1.1em;">No PRs were merged this week.</p>
+        </div>`;
+  } else {
+    html += `
         <ul class="pr-list">`;
 
-  for (const pr of allPRs) {
-    const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    });
-    // Extract repo name from URL
-    const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-    const repo = repoMatch ? repoMatch[1] : "";
-    html += `
+    for (const pr of allPRs) {
+      const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+      // Extract repo name from URL
+      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
+      const repo = repoMatch ? repoMatch[1] : "";
+      html += `
           <li class="pr-item">
             <a href="${pr.url}" class="pr-link" target="_blank">${pr.title}</a>
             <div class="pr-meta">@${pr.author.login} • ${date} • ${repo}</div>
           </li>`;
+    }
+
+    html += `
+        </ul>`;
   }
 
   html += `
-        </ul>
         
         <div class="summary">
           <h2>Summary</h2>
-          <div class="stat">Total PRs merged: ${allPRs.length}</div>
+          <div class="stat">Total PRs merged: ${allPRs.length}</div>`;
+
+  if (Object.keys(repoCount).length > 0) {
+    html += `
           
           <h3 style="margin-top: 20px; margin-bottom: 10px;">By Repository:</h3>`;
 
-  for (const [repo, count] of Object.entries(repoCount).sort(
-    (a, b) => b[1] - a[1]
-  )) {
-    html += `
+    for (const [repo, count] of Object.entries(repoCount).sort(
+      (a, b) => b[1] - a[1]
+    )) {
+      html += `
           <div class="repo-stat">${repo}: ${count} PR${
-      count !== 1 ? "s" : ""
-    }</div>`;
+        count !== 1 ? "s" : ""
+      }</div>`;
+    }
   }
 
   html += `
@@ -627,14 +646,19 @@ function formatSummaryReport(dateRange, allPRs) {
   summary += `*Summary:*\n\n`;
   summary += `Total PRs merged: ${allPRs.length}\n\n`;
 
-  summary += `*By Repository:*\n`;
-  for (const [repo, count] of Object.entries(repoCount).sort(
-    (a, b) => b[1] - a[1]
-  )) {
-    summary += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
+  if (allPRs.length === 0) {
+    summary += `No PRs were merged this week.\n\n`;
+  } else {
+    summary += `*By Repository:*\n`;
+    for (const [repo, count] of Object.entries(repoCount).sort(
+      (a, b) => b[1] - a[1]
+    )) {
+      summary += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
+    }
+    summary += `\n`;
   }
 
-  summary += `\n:bar_chart: See the <https://${CONFIG.quickSiteName}.quick.shopify.io|Analytics Experience Weekly PR Report> for more details.\n`;
+  summary += `:bar_chart: See the <https://${CONFIG.quickSiteName}.quick.shopify.io|Analytics Experience Weekly PR Report> for more details.\n`;
 
   return summary;
 }
@@ -796,8 +820,9 @@ function main() {
     console.log(
       "\nNo merged PRs found for the specified date range and criteria."
     );
-    console.log("=".repeat(80));
-    return;
+    console.log("Continuing to generate empty report...");
+  } else {
+    console.log(`\nTotal merged PRs found: ${allPRs.length}`);
   }
 
   console.log(`\nTotal merged PRs found: ${allPRs.length}`);
