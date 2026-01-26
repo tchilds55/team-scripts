@@ -44,7 +44,7 @@ const CONFIG = {
 function getLastWeekDateRange() {
   // Get current date in Eastern timezone
   const now = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
+    new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
   );
 
   // Get the day of week (0 = Sunday, 1 = Monday, etc.)
@@ -129,14 +129,14 @@ function fetchPRs(repo, dateRange) {
     } catch (error) {
       console.error(
         `    Error fetching PRs for author ${owner}:`,
-        error.message
+        error.message,
       );
     }
   }
 
   // Remove duplicates by PR number
   const uniquePRs = Array.from(
-    new Map(allPRs.map((pr) => [pr.number, pr])).values()
+    new Map(allPRs.map((pr) => [pr.number, pr])).values(),
   );
   console.log(`  Found ${uniquePRs.length} PRs`);
 
@@ -169,7 +169,7 @@ function categorizePRs(prs) {
       categories["Features"].push(pr);
     } else if (
       labels.some(
-        (l) => l.includes("build") || l.includes("tooling") || l.includes("ci")
+        (l) => l.includes("build") || l.includes("tooling") || l.includes("ci"),
       )
     ) {
       categories["Build & Tooling"].push(pr);
@@ -225,8 +225,8 @@ function formatReport(dateRange, allPRs) {
     }
 
     report += `*Summary by Repository:*\n`;
-    for (const [repo, count] of Object.entries(repoCount).sort(
-      (a, b) => b[1] - a[1]
+    for (const [repo, count] of Object.entries(repoCount).sort((a, b) =>
+      a[0].localeCompare(b[0]),
     )) {
       report += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
     }
@@ -264,26 +264,43 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
           <p style="font-size: 1.1em;">No PRs were merged this week.</p>
         </div>`;
   } else {
-    html += `
+    // Group PRs by repository
+    const prsByRepo = {};
+    for (const pr of allPRs) {
+      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
+      const repo = repoMatch ? repoMatch[1] : "Unknown";
+      if (!prsByRepo[repo]) {
+        prsByRepo[repo] = [];
+      }
+      prsByRepo[repo].push(pr);
+    }
+
+    // Sort repos alphabetically (case-insensitive)
+    const sortedRepos = Object.keys(prsByRepo).sort((a, b) =>
+      a.localeCompare(b),
+    );
+
+    // Render PRs grouped by repository
+    for (const repo of sortedRepos) {
+      html += `
+        <h3 class="repo-heading">${repo}</h3>
         <ul class="pr-list">`;
 
-    for (const pr of allPRs) {
-      const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-      // Extract repo name from URL
-      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-      const repo = repoMatch ? repoMatch[1] : "";
-      html += `
+      for (const pr of prsByRepo[repo]) {
+        const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        });
+        html += `
           <li class="pr-item">
             <a href="${pr.url}" class="pr-link" target="_blank">${pr.title}</a>
             <div class="pr-meta">@${pr.author.login} • ${date} • ${repo}</div>
           </li>`;
-    }
+      }
 
-    html += `
+      html += `
         </ul>`;
+    }
   }
 
   html += `
@@ -297,13 +314,13 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
           
           <h3 style="margin-top: 20px; margin-bottom: 10px;">By Repository:</h3>`;
 
-    for (const [repo, count] of Object.entries(repoCount).sort(
-      (a, b) => b[1] - a[1]
+    for (const [repo, count] of Object.entries(repoCount).sort((a, b) =>
+      a[0].localeCompare(b[0]),
     )) {
       html += `
           <div class="repo-stat">${repo}: ${count} PR${
-        count !== 1 ? "s" : ""
-      }</div>`;
+            count !== 1 ? "s" : ""
+          }</div>`;
     }
   }
 
@@ -378,6 +395,19 @@ function formatReportAsHTML(dateRange, allPRs) {
       margin-bottom: 15px;
       border-bottom: 2px solid #ecf0f1;
       padding-bottom: 5px;
+    }
+    .repo-heading {
+      color: #2c3e50;
+      font-size: 1.05em;
+      font-weight: 600;
+      margin-top: 25px;
+      margin-bottom: 12px;
+      padding-left: 0;
+    }
+    .repo-heading::before {
+      content: '📁 ';
+      font-size: 1.1em;
+      margin-right: 6px;
     }
     .pr-list {
       list-style: none;
@@ -650,8 +680,8 @@ function formatSummaryReport(dateRange, allPRs) {
     summary += `No PRs were merged this week.\n\n`;
   } else {
     summary += `*By Repository:*\n`;
-    for (const [repo, count] of Object.entries(repoCount).sort(
-      (a, b) => b[1] - a[1]
+    for (const [repo, count] of Object.entries(repoCount).sort((a, b) =>
+      a[0].localeCompare(b[0]),
     )) {
       summary += `• ${repo}: ${count} PR${count !== 1 ? "s" : ""}\n`;
     }
@@ -715,7 +745,7 @@ function deployToQuick(dateRange, allPRs) {
 
     // Extract existing reports (everything inside <div id="reports">...</div>)
     const reportsMatch = existingHTML.match(
-      /<div id="reports">([\s\S]*?)<\/div>\s*<div class="updated">/
+      /<div id="reports">([\s\S]*?)<\/div>\s*<div class="updated">/,
     );
 
     let existingReports = reportsMatch ? reportsMatch[1].trim() : "";
@@ -734,13 +764,13 @@ function deployToQuick(dateRange, allPRs) {
     const reportsContent = newWeekReport + "\n" + existingReports;
     finalHTML = finalHTML.replace(
       /(<div id="reports">)[\s\S]*?(<\/div>\s*<div class="updated">)/,
-      `$1\n${reportsContent}\n    $2`
+      `$1\n${reportsContent}\n    $2`,
     );
 
     // Update timestamp
     finalHTML = finalHTML.replace(
       /Last updated: .*?<\/div>/,
-      `Last updated: ${updatedTimestamp}</div>`
+      `Last updated: ${updatedTimestamp}</div>`,
     );
   } else {
     console.log("  Creating new index.html...");
@@ -749,7 +779,7 @@ function deployToQuick(dateRange, allPRs) {
     finalHTML = formatReportAsHTML(dateRange, allPRs);
     finalHTML = finalHTML.replace(
       /(<div id="reports">)[\s\S]*?(<\/div>\s*<div class="updated">)/,
-      `$1\n${newWeekReport}\n    $2`
+      `$1\n${newWeekReport}\n    $2`,
     );
   }
 
@@ -796,14 +826,14 @@ function main() {
   console.log(
     `Started at: ${new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
-    })}`
+    })}`,
   );
   console.log();
 
   // Calculate date range
   const dateRange = getLastWeekDateRange();
   console.log(
-    `Report period: ${dateRange.startFormatted} - ${dateRange.endFormatted}`
+    `Report period: ${dateRange.startFormatted} - ${dateRange.endFormatted}`,
   );
   console.log(`Date range: ${dateRange.start} to ${dateRange.end}`);
   console.log();
@@ -818,7 +848,7 @@ function main() {
 
   if (allPRs.length === 0) {
     console.log(
-      "\nNo merged PRs found for the specified date range and criteria."
+      "\nNo merged PRs found for the specified date range and criteria.",
     );
     console.log("Continuing to generate empty report...");
   } else {
@@ -862,7 +892,7 @@ function main() {
   console.log(
     `Completed at: ${new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
-    })}`
+    })}`,
   );
   console.log("=".repeat(80));
 }
