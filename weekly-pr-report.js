@@ -38,6 +38,66 @@ const CONFIG = {
   ],
 };
 
+// ===========================
+// SHARED UTILITY FUNCTIONS
+// ===========================
+
+/**
+ * Extract repository name from GitHub URL
+ */
+function extractRepoFromUrl(url) {
+  const match = url.match(/github\.com\/([^/]+\/[^/]+)\//);
+  return match ? match[1] : "Unknown";
+}
+
+/**
+ * Build repository count map from PRs
+ */
+function buildRepoCount(prs) {
+  const repoCount = {};
+  for (const pr of prs) {
+    const repo = extractRepoFromUrl(pr.url);
+    repoCount[repo] = (repoCount[repo] || 0) + 1;
+  }
+  return repoCount;
+}
+
+/**
+ * Format a date in short format (e.g., "Jan 15")
+ */
+function formatDateShort(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
+/**
+ * Get environment configuration for external commands
+ */
+function getCommandEnv() {
+  return {
+    ...process.env,
+    GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
+    HOME: process.env.HOME || "/Users/tchilds",
+    PATH:
+      "/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:" +
+      (process.env.PATH || ""),
+  };
+}
+
+/**
+ * Read external file content
+ */
+function readExternalFile(filename) {
+  const filePath = path.join(__dirname, filename);
+  return fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf-8") : "";
+}
+
+// ===========================
+// CORE BUSINESS LOGIC
+// ===========================
+
 /**
  * Calculate last week's date range (Monday through Sunday) in Eastern timezone
  */
@@ -101,20 +161,9 @@ function fetchPRs(repo, dateRange) {
       const command = `${CONFIG.ghPath} pr list --repo ${repo} --state merged --author ${owner} --limit 1000 --json number,title,author,mergedAt,labels,url`;
       console.log(`    Running: ${command}`);
 
-      // Set environment for gh CLI with proper PATH for cron
-      const env = {
-        ...process.env,
-        GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
-        HOME: process.env.HOME || "/Users/tchilds",
-        // Include common paths for node and other binaries
-        PATH:
-          "/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:" +
-          (process.env.PATH || ""),
-      };
-
       const output = execSync(command, {
         encoding: "utf8",
-        env: env,
+        env: getCommandEnv(),
       });
       const prList = JSON.parse(output);
 
@@ -189,6 +238,10 @@ function categorizePRs(prs) {
   return categories;
 }
 
+// ===========================
+// REPORT FORMATTING
+// ===========================
+
 /**
  * Format the PR report
  */
@@ -203,10 +256,7 @@ function formatReport(dateRange, allPRs) {
     // Add all PRs
     report += `*Pull Requests:*\n`;
     for (const pr of allPRs) {
-      const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
+      const date = formatDateShort(pr.mergedAt);
       report += `• <${pr.url}> ${pr.title} (@${pr.author.login}, ${date})\n`;
     }
 
@@ -214,15 +264,7 @@ function formatReport(dateRange, allPRs) {
     report += `\n*Total PRs merged: ${allPRs.length}*\n\n`;
 
     // Add summary by repository
-    const repoCount = {};
-    for (const pr of allPRs) {
-      // Extract repo name from URL (e.g., "shop/world" from "https://github.com/shop/world/pull/123")
-      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-      if (repoMatch) {
-        const repo = repoMatch[1];
-        repoCount[repo] = (repoCount[repo] || 0) + 1;
-      }
-    }
+    const repoCount = buildRepoCount(allPRs);
 
     report += `*Summary by Repository:*\n`;
     for (const [repo, count] of Object.entries(repoCount).sort((a, b) =>
@@ -243,14 +285,7 @@ function formatReport(dateRange, allPRs) {
  */
 function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
   // Build summary by repository
-  const repoCount = {};
-  for (const pr of allPRs) {
-    const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-    if (repoMatch) {
-      const repo = repoMatch[1];
-      repoCount[repo] = (repoCount[repo] || 0) + 1;
-    }
-  }
+  const repoCount = buildRepoCount(allPRs);
 
   let html = `
     <details${isOpen ? " open" : ""} class="week-report">
@@ -267,8 +302,7 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
     // Group PRs by repository
     const prsByRepo = {};
     for (const pr of allPRs) {
-      const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-      const repo = repoMatch ? repoMatch[1] : "Unknown";
+      const repo = extractRepoFromUrl(pr.url);
       if (!prsByRepo[repo]) {
         prsByRepo[repo] = [];
       }
@@ -287,10 +321,7 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
         <ul class="pr-list">`;
 
       for (const pr of prsByRepo[repo]) {
-        const date = new Date(pr.mergedAt).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        });
+        const date = formatDateShort(pr.mergedAt);
         html += `
           <li class="pr-item">
             <a href="${pr.url}" class="pr-link" target="_blank">${pr.title}</a>
@@ -304,14 +335,14 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
   }
 
   html += `
-        
+
         <div class="summary">
           <h2>Summary</h2>
           <div class="stat">Total PRs merged: ${allPRs.length}</div>`;
 
   if (Object.keys(repoCount).length > 0) {
     html += `
-          
+
           <h3 style="margin-top: 20px; margin-bottom: 10px;">By Repository:</h3>`;
 
     for (const [repo, count] of Object.entries(repoCount).sort((a, b) =>
@@ -336,6 +367,10 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
  * Convert report to HTML (full page with all weeks)
  */
 function formatReportAsHTML(dateRange, allPRs) {
+  // Load external CSS and JS
+  const cssContent = readExternalFile("styles.css");
+  const jsContent = readExternalFile("search.js");
+
   let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,313 +378,40 @@ function formatReportAsHTML(dateRange, allPRs) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weekly PR Reports - Analytics Experience</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f5f5f5;
-      line-height: 1.6;
-    }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 10px;
-      border-bottom: 3px solid #3498db;
-      padding-bottom: 10px;
-    }
-    .week-report {
-      margin: 20px 0;
-      border: 1px solid #e1e4e8;
-      border-radius: 6px;
-      background: #fafbfc;
-    }
-    .week-report summary {
-      padding: 15px 20px;
-      cursor: pointer;
-      font-size: 1.2em;
-      font-weight: 600;
-      color: #2c3e50;
-      background: #f6f8fa;
-      border-radius: 6px;
-      user-select: none;
-    }
-    .week-report summary:hover {
-      background: #e8f4f8;
-    }
-    .week-report[open] summary {
-      border-bottom: 1px solid #e1e4e8;
-      border-radius: 6px 6px 0 0;
-    }
-    .report-content {
-      padding: 20px;
-    }
-    h2 {
-      color: #34495e;
-      margin-top: 20px;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #ecf0f1;
-      padding-bottom: 5px;
-    }
-    .repo-heading {
-      color: #2c3e50;
-      font-size: 1.05em;
-      font-weight: 600;
-      margin-top: 25px;
-      margin-bottom: 12px;
-      padding-left: 0;
-    }
-    .repo-heading::before {
-      content: '📁 ';
-      font-size: 1.1em;
-      margin-right: 6px;
-    }
-    .pr-list {
-      list-style: none;
-      padding: 0;
-    }
-    .pr-item {
-      padding: 12px;
-      margin-bottom: 10px;
-      background: #ffffff;
-      border-left: 4px solid #3498db;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .pr-item:hover {
-      background: #e8f4f8;
-    }
-    .pr-link {
-      color: #2980b9;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .pr-link:hover {
-      text-decoration: underline;
-    }
-    .pr-meta {
-      color: #7f8c8d;
-      font-size: 0.9em;
-      margin-top: 4px;
-    }
-    .summary {
-      background: #ecf0f1;
-      padding: 20px;
-      border-radius: 6px;
-      margin-top: 20px;
-    }
-    .summary h2 {
-      margin-top: 0;
-      border: none;
-    }
-    .stat {
-      display: inline-block;
-      background: white;
-      padding: 10px 20px;
-      margin: 5px;
-      border-radius: 4px;
-      font-weight: 500;
-    }
-    .repo-stat {
-      margin: 8px 0;
-      padding: 8px;
-      background: white;
-      border-radius: 4px;
-    }
-    .updated {
-      text-align: right;
-      color: #95a5a6;
-      font-size: 0.9em;
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid #ecf0f1;
-    }
-    .search-container {
-      margin: 20px 0 30px 0;
-      position: relative;
-    }
-    .search-input {
-      width: 100%;
-      padding: 12px 40px 12px 16px;
-      font-size: 16px;
-      border: 2px solid #e1e4e8;
-      border-radius: 6px;
-      outline: none;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
-    .search-input:focus {
-      border-color: #3498db;
-    }
-    .search-input::placeholder {
-      color: #95a5a6;
-    }
-    .search-icon {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #95a5a6;
-      pointer-events: none;
-    }
-    .clear-search {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #95a5a6;
-      cursor: pointer;
-      font-size: 18px;
-      padding: 4px 8px;
-      display: none;
-    }
-    .clear-search:hover {
-      color: #2c3e50;
-    }
-    .pr-item.hidden {
-      display: none;
-    }
-    .week-report.no-results {
-      opacity: 0.5;
-    }
-    .no-results-message {
-      text-align: center;
-      padding: 40px 20px;
-      color: #7f8c8d;
-      font-size: 1.1em;
-      display: none;
-    }
-    .no-results-message.visible {
-      display: block;
-    }
-    .search-stats {
-      color: #7f8c8d;
-      font-size: 0.9em;
-      margin-top: 8px;
-      text-align: right;
-    }
+${cssContent}
   </style>
 </head>
 <body>
   <div class="container">
     <h1>📊 Analytics Experience Weekly PR Reports</h1>
-    
+
     <div class="search-container">
-      <input 
-        type="text" 
-        id="searchInput" 
-        class="search-input" 
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
         placeholder="Search PRs by title, author, or repo..."
       />
       <button class="clear-search" id="clearSearch" title="Clear search">&times;</button>
       <span class="search-icon">🔍</span>
       <div class="search-stats" id="searchStats"></div>
     </div>
-    
+
     <div class="no-results-message" id="noResults">
       No PRs found matching your search criteria.
     </div>
-    
+
     <div id="reports">
       <!-- Weekly reports will be inserted here -->
     </div>
-    
+
     <div class="updated">Last updated: ${new Date().toLocaleString("en-US", {
       timeZone: "America/New_York",
     })}</div>
   </div>
-  
+
   <script>
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    const clearSearch = document.getElementById('clearSearch');
-    const searchStats = document.getElementById('searchStats');
-    const noResults = document.getElementById('noResults');
-    const weekReports = document.querySelectorAll('.week-report');
-    
-    function performSearch() {
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      
-      // Show/hide clear button
-      clearSearch.style.display = searchTerm ? 'block' : 'none';
-      
-      if (!searchTerm) {
-        // Reset everything if search is empty
-        document.querySelectorAll('.pr-item').forEach(item => {
-          item.classList.remove('hidden');
-        });
-        weekReports.forEach(report => {
-          report.classList.remove('no-results');
-        });
-        noResults.classList.remove('visible');
-        searchStats.textContent = '';
-        return;
-      }
-      
-      let totalVisible = 0;
-      let totalPRs = 0;
-      
-      // Search through all week reports
-      weekReports.forEach(report => {
-        const prItems = report.querySelectorAll('.pr-item');
-        let visibleInWeek = 0;
-        
-        prItems.forEach(item => {
-          totalPRs++;
-          const title = item.querySelector('.pr-link')?.textContent.toLowerCase() || '';
-          const meta = item.querySelector('.pr-meta')?.textContent.toLowerCase() || '';
-          
-          // Check if search term matches title, author, or repo
-          if (title.includes(searchTerm) || meta.includes(searchTerm)) {
-            item.classList.remove('hidden');
-            visibleInWeek++;
-            totalVisible++;
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-        
-        // Dim week reports with no matching results
-        if (visibleInWeek === 0) {
-          report.classList.add('no-results');
-        } else {
-          report.classList.remove('no-results');
-        }
-      });
-      
-      // Show no results message if nothing found
-      if (totalVisible === 0) {
-        noResults.classList.add('visible');
-        searchStats.textContent = '';
-      } else {
-        noResults.classList.remove('visible');
-        searchStats.textContent = \`Showing \${totalVisible} of \${totalPRs} PRs\`;
-      }
-    }
-    
-    // Event listeners
-    searchInput.addEventListener('input', performSearch);
-    
-    clearSearch.addEventListener('click', () => {
-      searchInput.value = '';
-      performSearch();
-      searchInput.focus();
-    });
-    
-    // Allow Escape key to clear search
-    searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        searchInput.value = '';
-        performSearch();
-      }
-    });
+${jsContent}
   </script>
 </body>
 </html>`;
@@ -662,14 +424,7 @@ function formatReportAsHTML(dateRange, allPRs) {
  */
 function formatSummaryReport(dateRange, allPRs) {
   // Build summary by repository
-  const repoCount = {};
-  for (const pr of allPRs) {
-    const repoMatch = pr.url.match(/github\.com\/([^/]+\/[^/]+)\//);
-    if (repoMatch) {
-      const repo = repoMatch[1];
-      repoCount[repo] = (repoCount[repo] || 0) + 1;
-    }
-  }
+  const repoCount = buildRepoCount(allPRs);
 
   let summary = `:mega: *Weekly PR Report*\n\n`;
   summary += `*${dateRange.startFormatted} - ${dateRange.endFormatted}*\n\n`;
@@ -692,6 +447,10 @@ function formatSummaryReport(dateRange, allPRs) {
 
   return summary;
 }
+
+// ===========================
+// FILE OPERATIONS
+// ===========================
 
 /**
  * Save report to Google Drive
@@ -787,16 +546,6 @@ function deployToQuick(dateRange, allPRs) {
   fs.writeFileSync(indexPath, finalHTML);
 
   try {
-    // Set environment for quick CLI with proper PATH for cron
-    const env = {
-      ...process.env,
-      HOME: process.env.HOME || "/Users/tchilds",
-      // Include common paths for node and other binaries
-      PATH:
-        "/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin:" +
-        (process.env.PATH || ""),
-    };
-
     // Run the quick deploy command with auto-yes for cron compatibility
     const command = `echo 'y' | ${CONFIG.quickPath} deploy ${distPath} ${CONFIG.quickSiteName}`;
     console.log(`  Running: ${command}`);
@@ -805,7 +554,7 @@ function deployToQuick(dateRange, allPRs) {
       encoding: "utf-8",
       stdio: "inherit",
       shell: true,
-      env: env,
+      env: getCommandEnv(),
     });
 
     console.log("✅ Deployed successfully!");
@@ -815,6 +564,10 @@ function deployToQuick(dateRange, allPRs) {
     throw error;
   }
 }
+
+// ===========================
+// MAIN EXECUTION
+// ===========================
 
 /**
  * Main execution function
@@ -851,8 +604,6 @@ function main() {
       "\nNo merged PRs found for the specified date range and criteria.",
     );
     console.log("Continuing to generate empty report...");
-  } else {
-    console.log(`\nTotal merged PRs found: ${allPRs.length}`);
   }
 
   console.log(`\nTotal merged PRs found: ${allPRs.length}`);
