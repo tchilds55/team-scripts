@@ -58,30 +58,51 @@ h2 {
   border-bottom: 2px solid #ecf0f1;
   padding-bottom: 5px;
 }
+.repo-section {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #e8eaed;
+  border-radius: 4px;
+  background: #fafbfc;
+}
 .repo-heading {
   color: #2c3e50;
   font-size: 1.05em;
   font-weight: 600;
-  margin-top: 25px;
-  margin-bottom: 12px;
-  padding-left: 0;
+  padding: 12px 15px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  background: #f8f9fa;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
-.repo-heading::before {
-  content: '📁 ';
-  font-size: 1.1em;
-  margin-right: 6px;
+.repo-heading::-webkit-details-marker {
+  display: none;
+}
+.repo-heading:hover {
+  background: #e8f4f8;
+}
+.repo-section[open] .repo-heading {
+  border-bottom: 1px solid #e8eaed;
+  border-radius: 4px 4px 0 0;
 }
 .pr-list {
   list-style: none;
-  padding: 0;
+  padding: 15px;
+  margin: 0;
+  background: white;
 }
 .pr-item {
   padding: 12px;
   margin-bottom: 10px;
-  background: #ffffff;
+  background: #f8f9fa;
   border-left: 4px solid #3498db;
   border-radius: 4px;
   transition: background-color 0.2s;
+}
+.pr-item:last-child {
+  margin-bottom: 0;
 }
 .pr-item:hover {
   background: #e8f4f8;
@@ -226,240 +247,244 @@ h2 {
       <summary>Jan 19 - Jan 25, 2026</summary>
       <div class="report-content">
         <h2>Pull Requests Merged</h2>
-        <h3 class="repo-heading">shop/world</h3>
-        <ul class="pr-list">
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/371387" class="pr-link" target="_blank">Bump AUIC and Polaris Viz in analytics-ui</a>
-            <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/371146" class="pr-link" target="_blank">Bump analytics-ui packages</a>
-            <div class="pr-meta">@bencmilton • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/369777" class="pr-link" target="_blank">Move more files into /shared/</a>
-            <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/368444" class="pr-link" target="_blank">Fix slots not being passed to Error and Empty state cards</a>
-            <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361641" class="pr-link" target="_blank">Refactor signal usage</a>
-            <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361550" class="pr-link" target="_blank">Add reactiveQueryObserver</a>
-            <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361291" class="pr-link" target="_blank">Use reactiveQuery instead of getObservableCoreQuery</a>
-            <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/363792" class="pr-link" target="_blank">[Analytics] Remove exploration modes beta flag, again</a>
-            <div class="pr-meta">@carysmills • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/372472" class="pr-link" target="_blank">Add DECIMAL type to FilterValuePicker</a>
-            <div class="pr-meta">@envex • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/354312" class="pr-link" target="_blank">Add SuggestionWithColor to FiltersSection</a>
-            <div class="pr-meta">@envex • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/288014" class="pr-link" target="_blank">Add `<AppAttribution />`</a>
-            <div class="pr-meta">@envex • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/366290" class="pr-link" target="_blank">Add f_analytics_picker_component_migration beta flag</a>
-            <div class="pr-meta">@hannahl123 • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/363366" class="pr-link" target="_blank">Fix storybook server startup warnings</a>
-            <div class="pr-meta">@maryamkaka • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/355134" class="pr-link" target="_blank">[analytics-ui] Annotation Interaction tests  </a>
-            <div class="pr-meta">@maryamkaka • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/370805" class="pr-link" target="_blank">Wire up wrapper prop in ShopifyQLMetricCard</a>
-            <div class="pr-meta">@michaelnesen • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/369609" class="pr-link" target="_blank">Fix responsive font sizing for MetricCard on mobile</a>
-            <div class="pr-meta">@michaelnesen • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/364096" class="pr-link" target="_blank">Fix list visualization white space by using overflow-y: auto</a>
-            <div class="pr-meta">@michaelnesen • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/363624" class="pr-link" target="_blank">Fix list link styling for enriched dimensions</a>
-            <div class="pr-meta">@michaelnesen • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/374262" class="pr-link" target="_blank">Rename `storefront` to `storefront_event` for `MATCHES`</a>
-            <div class="pr-meta">@mkevinq • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361582" class="pr-link" target="_blank">Convert `next_expiry_date` and `last_credit_date` parameters from `DateTime` to `Date`</a>
-            <div class="pr-meta">@mkevinq • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/376062" class="pr-link" target="_blank">Remove capitalization of fields in analytics issues</a>
-            <div class="pr-meta">@mollerjorge • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/368129" class="pr-link" target="_blank">Use resource ids to get variants bought together ids</a>
-            <div class="pr-meta">@mollerjorge • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/365596" class="pr-link" target="_blank">Remove products_bought_together_ids now that we rely on resource ids</a>
-            <div class="pr-meta">@mollerjorge • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/364910" class="pr-link" target="_blank">Fix sorting bug for enriched dimensions</a>
-            <div class="pr-meta">@mollerjorge • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/355117" class="pr-link" target="_blank">Add container with block padding for analytics issues mobile banner</a>
-            <div class="pr-meta">@mollerjorge • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/375699" class="pr-link" target="_blank">fix, Increase zIndex value for autocomplete tooltip to avoid to be behind table horizontal scrollbar</a>
-            <div class="pr-meta">@Passanelli • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/357468" class="pr-link" target="_blank">feature, Update collapsed and expanded state flows for CodeEditor</a>
-            <div class="pr-meta">@Passanelli • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/367298" class="pr-link" target="_blank">[Reporting] Mark shopifyql_query as PII in MerchantMetric model</a>
-            <div class="pr-meta">@pbojinov • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361843" class="pr-link" target="_blank">[Reporting] Use read-committed transaction for organization section prepending</a>
-            <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/359377" class="pr-link" target="_blank">[Reporting] Improve transaction handling for organization section deletion</a>
-            <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/359367" class="pr-link" target="_blank">[Reporting] Use read-committed transaction for organization section prepending</a>
-            <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/359355" class="pr-link" target="_blank">[Reporting] Use transaction_prefer_read_committed for organization section deletion</a>
-            <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/359348" class="pr-link" target="_blank">[Reporting] Fix GlobalDB primary key for reports table</a>
-            <div class="pr-meta">@pbojinov • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/352944" class="pr-link" target="_blank">Add isMetafield field to schema proto and BaseSchemaField</a>
-            <div class="pr-meta">@pbojinov • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/327680" class="pr-link" target="_blank">[Analytics] Add rig configuration for merchant analytics API</a>
-            <div class="pr-meta">@pbojinov • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/376307" class="pr-link" target="_blank">Remove f_realtime_analytics_indicator beta flag</a>
-            <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/370560" class="pr-link" target="_blank">Bump AUIC + AUI + shopifyql-parser in Admin Web</a>
-            <div class="pr-meta">@philschoefer • Jan 24 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/370003" class="pr-link" target="_blank">Bump AUIC in Analytics UI</a>
-            <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/368050" class="pr-link" target="_blank">Use parser methods to get dynamic total field names for nested mode queries</a>
-            <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/361085" class="pr-link" target="_blank">Update analytics-ui to AUIC v31.3</a>
-            <div class="pr-meta">@philschoefer • Jan 19 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/355429" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators beta flag</a>
-            <div class="pr-meta">@philschoefer • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/351762" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators_killswitch beta flag from reportify</a>
-            <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/351143" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators_killswitch beta flag</a>
-            <div class="pr-meta">@philschoefer • Jan 22 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/288264" class="pr-link" target="_blank">Remove `f_analytics_realtime_indicators` beta flag from Web Admin</a>
-            <div class="pr-meta">@philschoefer • Jan 21 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/287054" class="pr-link" target="_blank">Remove realtime indicators feature flag and make it default behavior</a>
-            <div class="pr-meta">@philschoefer • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/357476" class="pr-link" target="_blank">[Analytics] Disable sizeToContent to fix zoom-related layout in MetricsGrid</a>
-            <div class="pr-meta">@rita-morozova • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/367110" class="pr-link" target="_blank">[Analytics] Round and preserve decimal places for percentage filters</a>
-            <div class="pr-meta">@susiekims • Jan 23 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/365494" class="pr-link" target="_blank">[Analytics UI] Clamp list labels to 2 lines</a>
-            <div class="pr-meta">@susiekims • Jan 20 • shop/world</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/shop/world/pull/364123" class="pr-link" target="_blank">Audit MetricsBar</a>
-            <div class="pr-meta">@susiekims • Jan 21 • shop/world</div>
-          </li>
-        </ul>
-        <h3 class="repo-heading">Shopify/polaris-viz-internal</h3>
-        <ul class="pr-list">
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/385" class="pr-link" target="_blank">Fix version packages github action after directory changes</a>
-            <div class="pr-meta">@michaelnesen • Jan 20 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/384" class="pr-link" target="_blank">Restore deleted changeset config</a>
-            <div class="pr-meta">@michaelnesen • Jan 20 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/383" class="pr-link" target="_blank">Version Packages (Polaris Viz 8.3.0) - second attempt</a>
-            <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/382" class="pr-link" target="_blank">Version Packages Release Polaris Viz 8.3.0</a>
-            <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/376" class="pr-link" target="_blank">Remove partial animation from SparkChart</a>
-            <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/388" class="pr-link" target="_blank">Fix bug animating between partial and null points</a>
-            <div class="pr-meta">@susiekims • Jan 21 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/391" class="pr-link" target="_blank">Remove "internal" from Polaris Viz build configurations</a>
-            <div class="pr-meta">@thetrevorharmon • Jan 22 • Shopify/polaris-viz-internal</div>
-          </li>
-          <li class="pr-item">
-            <a href="https://github.com/Shopify/polaris-viz-internal/pull/390" class="pr-link" target="_blank">Add CI test analytics</a>
-            <div class="pr-meta">@thetrevorharmon • Jan 22 • Shopify/polaris-viz-internal</div>
-          </li>
-        </ul>
+        <details open class="repo-section">
+          <summary class="repo-heading">📁 shop/world</summary>
+          <ul class="pr-list">
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/371387" class="pr-link" target="_blank">Bump AUIC and Polaris Viz in analytics-ui</a>
+              <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/371146" class="pr-link" target="_blank">Bump analytics-ui packages</a>
+              <div class="pr-meta">@bencmilton • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/369777" class="pr-link" target="_blank">Move more files into /shared/</a>
+              <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/368444" class="pr-link" target="_blank">Fix slots not being passed to Error and Empty state cards</a>
+              <div class="pr-meta">@bencmilton • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361641" class="pr-link" target="_blank">Refactor signal usage</a>
+              <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361550" class="pr-link" target="_blank">Add reactiveQueryObserver</a>
+              <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361291" class="pr-link" target="_blank">Use reactiveQuery instead of getObservableCoreQuery</a>
+              <div class="pr-meta">@bencmilton • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/363792" class="pr-link" target="_blank">[Analytics] Remove exploration modes beta flag, again</a>
+              <div class="pr-meta">@carysmills • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/372472" class="pr-link" target="_blank">Add DECIMAL type to FilterValuePicker</a>
+              <div class="pr-meta">@envex • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/354312" class="pr-link" target="_blank">Add SuggestionWithColor to FiltersSection</a>
+              <div class="pr-meta">@envex • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/288014" class="pr-link" target="_blank">Add `<AppAttribution />`</a>
+              <div class="pr-meta">@envex • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/366290" class="pr-link" target="_blank">Add f_analytics_picker_component_migration beta flag</a>
+              <div class="pr-meta">@hannahl123 • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/363366" class="pr-link" target="_blank">Fix storybook server startup warnings</a>
+              <div class="pr-meta">@maryamkaka • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/355134" class="pr-link" target="_blank">[analytics-ui] Annotation Interaction tests  </a>
+              <div class="pr-meta">@maryamkaka • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/370805" class="pr-link" target="_blank">Wire up wrapper prop in ShopifyQLMetricCard</a>
+              <div class="pr-meta">@michaelnesen • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/369609" class="pr-link" target="_blank">Fix responsive font sizing for MetricCard on mobile</a>
+              <div class="pr-meta">@michaelnesen • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/364096" class="pr-link" target="_blank">Fix list visualization white space by using overflow-y: auto</a>
+              <div class="pr-meta">@michaelnesen • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/363624" class="pr-link" target="_blank">Fix list link styling for enriched dimensions</a>
+              <div class="pr-meta">@michaelnesen • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/374262" class="pr-link" target="_blank">Rename `storefront` to `storefront_event` for `MATCHES`</a>
+              <div class="pr-meta">@mkevinq • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361582" class="pr-link" target="_blank">Convert `next_expiry_date` and `last_credit_date` parameters from `DateTime` to `Date`</a>
+              <div class="pr-meta">@mkevinq • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/376062" class="pr-link" target="_blank">Remove capitalization of fields in analytics issues</a>
+              <div class="pr-meta">@mollerjorge • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/368129" class="pr-link" target="_blank">Use resource ids to get variants bought together ids</a>
+              <div class="pr-meta">@mollerjorge • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/365596" class="pr-link" target="_blank">Remove products_bought_together_ids now that we rely on resource ids</a>
+              <div class="pr-meta">@mollerjorge • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/364910" class="pr-link" target="_blank">Fix sorting bug for enriched dimensions</a>
+              <div class="pr-meta">@mollerjorge • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/355117" class="pr-link" target="_blank">Add container with block padding for analytics issues mobile banner</a>
+              <div class="pr-meta">@mollerjorge • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/375699" class="pr-link" target="_blank">fix, Increase zIndex value for autocomplete tooltip to avoid to be behind table horizontal scrollbar</a>
+              <div class="pr-meta">@Passanelli • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/357468" class="pr-link" target="_blank">feature, Update collapsed and expanded state flows for CodeEditor</a>
+              <div class="pr-meta">@Passanelli • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/367298" class="pr-link" target="_blank">[Reporting] Mark shopifyql_query as PII in MerchantMetric model</a>
+              <div class="pr-meta">@pbojinov • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361843" class="pr-link" target="_blank">[Reporting] Use read-committed transaction for organization section prepending</a>
+              <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/359377" class="pr-link" target="_blank">[Reporting] Improve transaction handling for organization section deletion</a>
+              <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/359367" class="pr-link" target="_blank">[Reporting] Use read-committed transaction for organization section prepending</a>
+              <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/359355" class="pr-link" target="_blank">[Reporting] Use transaction_prefer_read_committed for organization section deletion</a>
+              <div class="pr-meta">@pbojinov • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/359348" class="pr-link" target="_blank">[Reporting] Fix GlobalDB primary key for reports table</a>
+              <div class="pr-meta">@pbojinov • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/352944" class="pr-link" target="_blank">Add isMetafield field to schema proto and BaseSchemaField</a>
+              <div class="pr-meta">@pbojinov • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/327680" class="pr-link" target="_blank">[Analytics] Add rig configuration for merchant analytics API</a>
+              <div class="pr-meta">@pbojinov • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/376307" class="pr-link" target="_blank">Remove f_realtime_analytics_indicator beta flag</a>
+              <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/370560" class="pr-link" target="_blank">Bump AUIC + AUI + shopifyql-parser in Admin Web</a>
+              <div class="pr-meta">@philschoefer • Jan 24 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/370003" class="pr-link" target="_blank">Bump AUIC in Analytics UI</a>
+              <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/368050" class="pr-link" target="_blank">Use parser methods to get dynamic total field names for nested mode queries</a>
+              <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/361085" class="pr-link" target="_blank">Update analytics-ui to AUIC v31.3</a>
+              <div class="pr-meta">@philschoefer • Jan 19 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/355429" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators beta flag</a>
+              <div class="pr-meta">@philschoefer • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/351762" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators_killswitch beta flag from reportify</a>
+              <div class="pr-meta">@philschoefer • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/351143" class="pr-link" target="_blank">Remove f_analytics_realtime_indicators_killswitch beta flag</a>
+              <div class="pr-meta">@philschoefer • Jan 22 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/288264" class="pr-link" target="_blank">Remove `f_analytics_realtime_indicators` beta flag from Web Admin</a>
+              <div class="pr-meta">@philschoefer • Jan 21 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/287054" class="pr-link" target="_blank">Remove realtime indicators feature flag and make it default behavior</a>
+              <div class="pr-meta">@philschoefer • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/357476" class="pr-link" target="_blank">[Analytics] Disable sizeToContent to fix zoom-related layout in MetricsGrid</a>
+              <div class="pr-meta">@rita-morozova • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/367110" class="pr-link" target="_blank">[Analytics] Round and preserve decimal places for percentage filters</a>
+              <div class="pr-meta">@susiekims • Jan 23 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/365494" class="pr-link" target="_blank">[Analytics UI] Clamp list labels to 2 lines</a>
+              <div class="pr-meta">@susiekims • Jan 20 • shop/world</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/shop/world/pull/364123" class="pr-link" target="_blank">Audit MetricsBar</a>
+              <div class="pr-meta">@susiekims • Jan 21 • shop/world</div>
+            </li>
+          </ul>
+        </details>
+        <details open class="repo-section">
+          <summary class="repo-heading">📁 Shopify/polaris-viz-internal</summary>
+          <ul class="pr-list">
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/385" class="pr-link" target="_blank">Fix version packages github action after directory changes</a>
+              <div class="pr-meta">@michaelnesen • Jan 20 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/384" class="pr-link" target="_blank">Restore deleted changeset config</a>
+              <div class="pr-meta">@michaelnesen • Jan 20 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/383" class="pr-link" target="_blank">Version Packages (Polaris Viz 8.3.0) - second attempt</a>
+              <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/382" class="pr-link" target="_blank">Version Packages Release Polaris Viz 8.3.0</a>
+              <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/376" class="pr-link" target="_blank">Remove partial animation from SparkChart</a>
+              <div class="pr-meta">@philschoefer • Jan 19 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/388" class="pr-link" target="_blank">Fix bug animating between partial and null points</a>
+              <div class="pr-meta">@susiekims • Jan 21 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/391" class="pr-link" target="_blank">Remove "internal" from Polaris Viz build configurations</a>
+              <div class="pr-meta">@thetrevorharmon • Jan 22 • Shopify/polaris-viz-internal</div>
+            </li>
+            <li class="pr-item">
+              <a href="https://github.com/Shopify/polaris-viz-internal/pull/390" class="pr-link" target="_blank">Add CI test analytics</a>
+              <div class="pr-meta">@thetrevorharmon • Jan 22 • Shopify/polaris-viz-internal</div>
+            </li>
+          </ul>
+        </details>
 
         <div class="summary">
           <h2>Summary</h2>
@@ -1791,7 +1816,7 @@ h2 {
     </details>
     </div>
 
-    <div class="updated">Last updated: 1/28/2026, 1:13:02 PM</div>
+    <div class="updated">Last updated: 1/29/2026, 5:30:14 PM</div>
   </div>
 
   <script>
