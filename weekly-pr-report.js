@@ -317,20 +317,22 @@ function formatWeekReportAsDetails(dateRange, allPRs, isOpen = false) {
     // Render PRs grouped by repository
     for (const repo of sortedRepos) {
       html += `
-        <h3 class="repo-heading">${repo}</h3>
-        <ul class="pr-list">`;
+        <details open class="repo-section">
+          <summary class="repo-heading">📁 ${repo}</summary>
+          <ul class="pr-list">`;
 
       for (const pr of prsByRepo[repo]) {
         const date = formatDateShort(pr.mergedAt);
         html += `
-          <li class="pr-item">
-            <a href="${pr.url}" class="pr-link" target="_blank">${pr.title}</a>
-            <div class="pr-meta">@${pr.author.login} • ${date} • ${repo}</div>
-          </li>`;
+            <li class="pr-item">
+              <a href="${pr.url}" class="pr-link" target="_blank">${pr.title}</a>
+              <div class="pr-meta">@${pr.author.login} • ${date} • ${repo}</div>
+            </li>`;
       }
 
       html += `
-        </ul>`;
+          </ul>
+        </details>`;
     }
   }
 
