@@ -511,8 +511,12 @@ function deployToQuick(dateRange, allPRs) {
 
     let existingReports = reportsMatch ? reportsMatch[1].trim() : "";
 
-    // Remove 'open' attribute from existing reports so only the new one is expanded
-    existingReports = existingReports.replace(/<details\s+open/g, "<details");
+    // Remove 'open' attribute from existing week-report sections so only the new one is expanded
+    // Keep repo-section details open so they're ready when users expand older weeks
+    existingReports = existingReports.replace(
+      /<details\s+open\s+class="week-report"/g,
+      '<details class="week-report"',
+    );
 
     // Create updated HTML with new report at the top
     const updatedTimestamp = new Date().toLocaleString("en-US", {
