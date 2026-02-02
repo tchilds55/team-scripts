@@ -458,7 +458,7 @@ function formatSummaryReport(dateRange, allPRs) {
  * Save report to Google Drive
  */
 function saveReportToGoogleDrive(report) {
-  const driveFolder = "/Users/tchilds/Google Drive/My Drive/PR Reports";
+  const driveFolder = "/Users/tchilds/Library/CloudStorage/GoogleDrive-tammie.childs@shopify.com/My Drive/PR Reports/"
 
   // Create folder if it doesn't exist
   if (!fs.existsSync(driveFolder)) {
